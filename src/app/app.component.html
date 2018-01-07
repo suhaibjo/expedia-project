@@ -1,0 +1,182 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+
+    <div class="collapse navbar-collapse">
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="https://www.expedia.com/" target="_blank"><I><h5>Expedia.com</h5></I> <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li>
+          <a class="navbar-brand" href="#">Simple Project For Expedia</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+
+
+      </ul>
+      <ul class="navbar-nav">
+        <li class="text-white">
+         Welcome Back {{userId | uppercase}} &nbsp;
+        </li>
+      </ul>
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+           <a class="nav-link" href="https://twitter.com/Expedia"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="https://web.facebook.com/expedia/?ref=br_rs"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/suhaibjo/expedia-project"><i class="fa fa-github" aria-hidden="true"></i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="container">
+  <div class="page-header">
+    <h3>
+      Hi {{userId |uppercase}}, Here are a special offer for you!
+    </h3>
+  </div>
+
+
+<div style="text-align:center" >
+
+
+  <div class="row">
+      <div class="col-lg-6">
+        <h3>You can also, Search By <span class="label label-default">Distination you want to visit</span></h3>
+      <div class="input-group">
+
+       <input type="text" class="form-control" [(ngModel)]="distinationName"
+       (keyup)= "searchByDistinationName()"
+        placeholder="Where do you want to go">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button"  (click)= "searchByDistinationName()">Go!</button>
+        </span>
+      </div>
+    </div>
+    <div class="col-lg-6">
+        <h3>Or Search By <span class="label label-default">Region Id</span></h3>
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="regionId"
+        (keyup)= "searchByRegionId()"
+        placeholder="Search for...">
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="button"  (click)="searchByRegionId()">Go!</button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>
+
+<div class="row">
+  <div class="col-sm-6" *ngFor="let obj of data; let i = index">
+    <div class="card">
+      <div class="card-body">
+          <h3><div class="p-3 mb-2 bg-primary text-white">Offer #{{i+1}} <br/> {{obj.destination.longName}}</div></h3><br/>
+          <br/>
+          <br/>
+
+        <h4 class="card-title"><p class="card-text"> {{obj.destination.longName}} </p></h4>
+         <br/>
+         <br/>
+
+        <a href="#" (click)="commonServices.redirectToURL(obj.hotelUrls.hotelSearchResultUrl)" class="btn btn-primary">Hotel Deals in {{obj.destination.city}} </a>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="getSpecialOffer(obj);" >
+          Special offer in {{obj.destination.city}}
+        </button>
+
+        <div class="float-right">
+              <a href="#" (click)="commonServices.redirectToURL(obj.hotelUrls.hotelInfositeUrl)"  data-placement="top" title="{{obj.hotelInfo.hotelName}}">
+                <img class="d-block" src="{{obj.hotelInfo.hotelImageUrl}}" alt="Second slide" width="95px" style="margin-top: -80px;">
+            </a>
+        </div>
+    </div>
+
+    </div>
+    <br/><br/>
+  </div>
+  <div style="margin-left:500px">
+  <div class="alert alert-danger"  *ngIf='showNoDataFoundMessage && regionId !="" && ( data == null || data == "undefinde")'>
+       <strong>No Data Found! </strong>
+  </div>
+</div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="margin-top:150px" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <br/>
+        <div class="modal-header">
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container" style="padding-top: 77px">
+            <div class="panel panel-info">
+             <div class="panel-heading"><h3>Special offer, Save up to {{hotelPricingInfo.percentSavings}}%</h3></div>
+
+           </div>
+
+
+           <div class="panel panel-primary">
+             <div class="panel-heading"><h3> Location:  {{hotelInfo.hotelCity}}</h3> </div>
+           </div>
+
+           <div class="panel panel-info text-center">
+             <h3>     <div class="panel-heading"> Just {{hotelPricingInfo.totalPriceValue}} {{hotelPricingInfo.currency}} For   {{hotelPricingInfo.lengthOfStay}}   <span *ngIf="hotelPricingInfo.lengthOfStay ==1">Day</span><span *ngIf="hotelPricingInfo.lengthOfStay >1">Days</span> </div></h3>
+           </div>
+
+          </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                         <div class="listing listing-radius listing-success special-offer">
+                             <div class="shape">
+                                 <div class="shape-text">
+                                   <a href="#" class="text-white" (click)="gotToHotelInfositeUrl()"><span class="h3"  > {{hotelPricingInfo.percentSavings}}% </span>OFF</a>
+                                 </div>
+                             </div>
+                             <div class="listing-content">
+                                <br/>
+                               <h4><span class="label label-primary">Hotel Name </span><span class="badge">{{hotelInfo.hotelName}} </span></h4><br/>
+                               <h4><span class="label label-primary">Hotel City </span><span class="badge">{{hotelInfo.hotelCity}} </span></h4><br/>
+                               <h4><span class="label label-primary">Length Of Stay </span><span class="badge">{{hotelPricingInfo.lengthOfStay}} &nbsp; <span *ngIf="hotelPricingInfo.lengthOfStay ==1"> Day</span><span *ngIf="hotelPricingInfo.lengthOfStay >1"> Days</span></span></h4><br/>
+
+                                   <h4><span class="label label-primary">Travel Start Date </span><span class="badge">{{hotelPricingInfo.travelStartDate | date: 'yyyy-MM-dd'}}</span></h4>  &nbsp;
+                                   <h4><span class="label label-primary">Travel End Date </span><span class="badge">{{hotelPricingInfo.travelEndDate | date: 'yyyy-MM-dd'}}</span></h4><br/>
+
+                              <div class="float-right" >
+                                  <img class="d-block" src="{{hotelInfo.hotelImageUrl}}" alt="Second slide" style="margin-top: -143px;" width="110px">
+                              </div>
+                       </div>
+                   </div>
+               </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="closeModal" class="btn-lg btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn-lg btn-primary" (click)="gotToHotelInfositeUrl()" >Go to Deal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  </div>
+
+
+
+</div>

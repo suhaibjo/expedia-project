@@ -1,0 +1,8 @@
+{
+  "name": "Suhaib",
+  "description": "A barebones Node.js app using Express 4",
+  "repository": "https://github.com/suhaibjo/my-repo",
+  "logo": "https://cdn.rawgit.com/heroku/enigmatic-shore-96424/master/public/node.svg",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}
