@@ -2,7 +2,7 @@
 
 > Language I choose
 
-** AngularJS with NodeJS **
+**AngularJS with NodeJS**
 
 All my experiences are in Java, But I choosed the NodeJS because I have been choosen in my current company to revamp company application and use AngularJS with NodeJs as a front-end framework instead of legacy code, also all modern websites use Javascript framework in front-end development, 
 so, I think this framework is the future of programming.
@@ -36,7 +36,7 @@ And it all happens within the browser with the same page SPA (no redirect needed
 
 - To run this applicatin in your machine, you have to download the project from github and install last version of NodeJs, 
 	and use a appropriate IDE
-- Go to root of this application and run this command: **ng serve**
+- Go to root of this application and run **npm i** then run this command: **ng serve**
 - Go to your browser and type **localhost:4200** 
 
 Any more Question, send it to me at this Email : suhaibjo@hotmail.com
